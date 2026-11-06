@@ -1,0 +1,601 @@
+<title>Hanuman Chalisa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: a calm reading column under a sticky title, thumb-reach controls in a bottom bar, everything else in bottom sheets. */
+:root{
+  --bg:#FFF1D6; --fg:#3A1410; --accent:#D9480F; --on-accent:#FFFFFF;
+  --card:color-mix(in srgb,var(--bg) 93%,var(--fg) 7%);
+  --line:color-mix(in srgb,var(--bg) 82%,var(--fg) 18%);
+  --muted:color-mix(in srgb,var(--fg) 62%,var(--bg) 38%);
+  --hi:34px; --tr:20px; --en:17px; --lh:1.7;
+  --ff-hi:"Noto Serif Devanagari","Tiro Devanagari Hindi","Kohinoor Devanagari","Nirmala UI",serif;
+  --ff-ui:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;
+  --align:center; --hi-weight:500;
+}
+:root[data-app-theme="light"]{--bg:#FFFFFF;--fg:#1C1917;--accent:#C2410C}
+:root[data-app-theme="sepia"]{--bg:#F1E4C8;--fg:#3B2F1E;--accent:#9A3412}
+:root[data-app-theme="dark"]{--bg:#1B1614;--fg:#F3E9DC;--accent:#FF8A4C;--on-accent:#1B1614;color-scheme:dark}
+:root[data-app-theme="black"]{--bg:#000000;--fg:#F5F0E6;--accent:#FF9F5A;--on-accent:#000000;color-scheme:dark}
+:root[data-app-theme="auto"]{--bg:#FFFFFF;--fg:#1C1917;--accent:#C2410C}
+@media (prefers-color-scheme:dark){
+  :root[data-app-theme="auto"]{--bg:#1B1614;--fg:#F3E9DC;--accent:#FF8A4C;--on-accent:#1B1614;color-scheme:dark}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-ui);margin:0;
+  padding-block:0 calc(88px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  -webkit-tap-highlight-color:transparent;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);display:flex;align-items:center;gap:8px;padding:10px 0 8px;margin:0 -2px}
+.title{flex:1;min-width:0}
+.title b{display:block;font-family:var(--ff-hi);font-size:22px;line-height:1.25;color:var(--accent)}
+.title span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ib{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;flex:none}
+.ib svg{width:22px;height:22px;fill:currentColor}
+.ib.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.prog{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);z-index:19;height:3px;background:var(--line);margin:0 -16px}
+.prog i{display:block;height:100%;width:0;background:var(--accent)}
+
+main{max-width:900px;margin:0 auto;padding-top:12px}
+.sec{margin:26px 0 6px;text-align:center;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.v{border-top:1px solid var(--line);padding:18px 0 14px;scroll-margin-top:84px}
+.vhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.badge{min-width:34px;height:34px;padding:0 10px;border-radius:17px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.tag{font-size:13px;color:var(--muted);flex:1}
+.acts{display:flex;gap:2px;margin-right:-8px}
+.acts button{width:44px;height:44px;border:0;background:none;border-radius:12px;display:grid;place-items:center;color:var(--muted)}
+.acts button svg{width:22px;height:22px;fill:currentColor}
+.acts button.on{color:var(--accent)}
+.acts button:active{background:var(--card)}
+.hi{font-family:var(--ff-hi);font-size:var(--hi);line-height:var(--lh);text-align:var(--align);font-weight:var(--hi-weight);overflow-wrap:anywhere}
+.hi p,.tr p{margin:0}
+.tr{font-size:var(--tr);line-height:1.55;text-align:var(--align);color:var(--muted);margin-top:10px;font-style:italic;overflow-wrap:anywhere}
+.en{font-size:var(--en);line-height:1.55;margin-top:10px;text-align:var(--align);overflow-wrap:anywhere}
+.note{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px dashed var(--line);font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+.note small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.edited{font-size:11px;color:var(--accent);margin-left:6px}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.pager{display:flex;gap:10px;margin-top:20px}
+.pager button{flex:1}
+.end{margin:28px 0 8px;text-align:center}
+
+.btn{min-height:50px;padding:0 18px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-weight:600;font-size:16px}
+.btn.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.warn{color:#c0262d;border-color:currentColor;background:none}
+.btn:active{transform:scale(.98)}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);display:flex;gap:6px;
+  padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
+.bar button{flex:1;min-width:0;height:56px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:15px;display:grid;place-items:center;gap:0;line-height:1.1}
+.bar button small{font-weight:500;font-size:11px;color:var(--muted)}
+.bar button.big{font-size:22px}
+.bar button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.bar button.on small{color:var(--on-accent)}
+
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:90%;background:var(--bg);border-radius:22px 22px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.3);
+  display:flex;flex-direction:column;max-width:700px;margin:0 auto}
+.sh-head{display:flex;align-items:center;gap:8px;padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.sh-head h2{margin:0;flex:1;font-size:19px}
+.sh-body{overflow-y:auto;padding:6px 18px calc(24px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch}
+.grp{padding:14px 0;border-bottom:1px solid var(--line)}
+.grp:last-child{border:0}
+.grp h3{margin:0 0 10px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.row label{flex:1;font-size:16px}
+.row output{min-width:58px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+input[type=range]{width:100%;height:36px;accent-color:var(--accent)}
+.stepper{display:flex;gap:10px;align-items:center}
+.stepper input{flex:1}
+.stepper .btn{width:54px;padding:0;font-size:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--card);font-weight:600;font-size:15px}
+.chip.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px;border:1px solid var(--line)}
+.tog{appearance:none;-webkit-appearance:none;width:54px;height:32px;border-radius:16px;background:var(--line);position:relative;flex:none;transition:background .15s;border:0}
+.tog::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.tog:checked{background:var(--accent)}
+.tog:checked::after{transform:translateX(22px)}
+input[type=color]{width:54px;height:44px;padding:2px;border-radius:10px;border:1px solid var(--line);background:var(--card)}
+textarea,input[type=text],input[type=number]{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px;font-size:17px;line-height:1.5}
+textarea{min-height:96px;resize:vertical}
+.lab{display:block;margin:12px 0 6px;font-size:13px;color:var(--muted)}
+.two{display:flex;gap:10px;margin-top:16px}
+.two .btn{flex:1}
+.sample{padding:12px;border-radius:12px;background:var(--card);text-align:var(--align);font-family:var(--ff-hi);font-size:var(--hi);line-height:var(--lh);overflow:hidden;overflow-wrap:anywhere}
+
+.vl{list-style:none;margin:0;padding:0}
+.vl li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.vl button.go{flex:1;min-width:0;text-align:left;border:0;background:none;padding:12px 0;display:flex;gap:12px;align-items:center}
+.vl .n{min-width:34px;height:34px;border-radius:17px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:14px;padding:0 6px}
+.vl .t{flex:1;min-width:0;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vl .st{color:var(--accent)}
+
+.mala{display:grid;place-items:center;padding:8px 0 4px}
+.ring{width:min(78vw,300px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--accent) calc(var(--p,0)*1%),var(--line) 0)}
+.tap{width:calc(100% - 22px);height:calc(100% - 22px);border-radius:50%;border:0;background:var(--bg);display:grid;place-items:center;align-content:center;
+  box-shadow:inset 0 0 0 2px var(--line);user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.tap:active{background:var(--card)}
+.tap b{font-size:clamp(56px,20vw,92px);line-height:1;font-variant-numeric:tabular-nums;color:var(--accent)}
+.tap span{font-family:var(--ff-hi);font-size:22px;margin-top:6px;max-width:80%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tap small{color:var(--muted);margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:var(--card);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+.stat small{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.week{display:flex;gap:6px;align-items:flex-end;height:64px;margin-top:6px}
+.week div{flex:1;background:var(--accent);border-radius:4px 4px 0 0;min-height:3px;opacity:.85}
+.week-l{display:flex;gap:6px;font-size:11px;color:var(--muted);text-align:center}
+.week-l span{flex:1}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(100px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--fg);color:var(--bg);padding:12px 18px;border-radius:24px;font-size:15px;max-width:86%;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="title"><b id="ttl">श्री हनुमान चालीसा</b><span>Hanuman Chalisa · Tulsidas</span></div>
+  <button class="ib" id="btnMarks" aria-label="Show bookmarked verses only" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+  <button class="ib" id="btnSettings" aria-label="Text and display settings"><svg viewBox="0 0 24 24"><path d="M4 7h10v2H4zm12 0h4v2h-4zM4 15h4v2H4zm6 0h10v2H10zM14 5h2v6h-2zM8 13h2v6H8z"/></svg></button>
+  <button class="ib" id="btnMore" aria-label="More: backup and reset"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+</header>
+<div class="prog"><i id="progBar"></i></div>
+<main id="main"></main>
+
+<nav class="bar" aria-label="Quick controls">
+  <button class="big" id="qMinus" aria-label="Smaller text">A−</button>
+  <button class="big" id="qPlus" aria-label="Bigger text">A+</button>
+  <button id="qList">Verses<small id="qListS"></small></button>
+  <button id="qJapa">Japa<small id="qJapaS"></small></button>
+  <button id="qScroll" aria-pressed="false">Scroll<small id="qScrollS">auto</small></button>
+</nav>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<!-- Settings -->
+<section class="sheet" id="sh-settings" role="dialog" aria-label="Display settings" hidden>
+  <div class="sh-head"><h2>Text &amp; display</h2><button class="btn" data-close>Done</button></div>
+  <div class="sh-body">
+    <div class="grp">
+      <h3>Text size</h3>
+      <div class="stepper"><button class="btn" id="sMinus" aria-label="Smaller">−</button>
+        <input type="range" id="set-size" data-set="size" min="16" max="150" step="1" aria-label="Verse text size">
+        <button class="btn" id="sPlus" aria-label="Bigger">+</button></div>
+      <div class="row"><label>Verse text</label><output data-out="size" data-unit="px"></output></div>
+      <div class="chips" id="presets">
+        <button class="chip" data-preset="24">Small</button><button class="chip" data-preset="34">Normal</button>
+        <button class="chip" data-preset="48">Large</button><button class="chip" data-preset="66">Extra large</button>
+        <button class="chip" data-preset="90">Huge</button><button class="chip" data-preset="125">Giant</button>
+      </div>
+      <div class="sample" id="sample">जय हनुमान ज्ञान गुन सागर</div>
+    </div>
+    <div class="grp">
+      <h3>Roman &amp; meaning size</h3>
+      <div class="row"><label for="set-trScale">Roman text, % of verse</label><output data-out="trScale" data-unit="%"></output></div>
+      <input type="range" id="set-trScale" data-set="trScale" min="30" max="100" step="5">
+      <div class="row"><label for="set-enSize">English meaning</label><output data-out="enSize" data-unit="px"></output></div>
+      <input type="range" id="set-enSize" data-set="enSize" min="12" max="60" step="1">
+      <div class="row"><label for="set-lh">Line spacing</label><output data-out="lh" data-unit="×"></output></div>
+      <input type="range" id="set-lh" data-set="lh" min="1.2" max="2.6" step="0.1">
+    </div>
+    <div class="grp">
+      <h3>Show</h3>
+      <div class="row"><label for="set-showTr">Roman transliteration</label><input class="tog" type="checkbox" id="set-showTr" data-set="showTr"></div>
+      <div class="row"><label for="set-showEn">English meaning</label><input class="tog" type="checkbox" id="set-showEn" data-set="showEn"></div>
+      <div class="row"><label for="set-showNum">Verse numbers</label><input class="tog" type="checkbox" id="set-showNum" data-set="showNum"></div>
+      <div class="row"><label for="set-showNotes">My notes</label><input class="tog" type="checkbox" id="set-showNotes" data-set="showNotes"></div>
+      <div class="row"><label for="set-bold">Bold text</label><input class="tog" type="checkbox" id="set-bold" data-set="bold"></div>
+    </div>
+    <div class="grp">
+      <h3>Reading mode</h3>
+      <div class="chips" data-seg="mode"><button class="chip" data-val="scroll">Scroll all</button><button class="chip" data-val="card">One verse at a time</button></div>
+      <h3 style="margin-top:16px">Alignment</h3>
+      <div class="chips" data-seg="align"><button class="chip" data-val="center">Centre</button><button class="chip" data-val="left">Left</button></div>
+      <h3 style="margin-top:16px">Font</h3>
+      <div class="chips" data-seg="font"><button class="chip" data-val="serif">Serif</button><button class="chip" data-val="sans">Sans</button><button class="chip" data-val="system">Device</button></div>
+    </div>
+    <div class="grp">
+      <h3>Theme</h3>
+      <div class="chips" data-seg="theme">
+        <button class="chip" data-val="saffron"><i class="sw" style="background:#FFF1D6"></i>Saffron</button>
+        <button class="chip" data-val="light"><i class="sw" style="background:#fff"></i>White</button>
+        <button class="chip" data-val="sepia"><i class="sw" style="background:#F1E4C8"></i>Sepia</button>
+        <button class="chip" data-val="dark"><i class="sw" style="background:#1B1614"></i>Dark</button>
+        <button class="chip" data-val="black"><i class="sw" style="background:#000"></i>Black</button>
+        <button class="chip" data-val="auto">Follow phone</button>
+        <button class="chip" data-val="custom">My colours</button>
+      </div>
+      <div id="customBox" hidden>
+        <div class="row"><label for="set-cBg">Background</label><input type="color" id="set-cBg" data-set="cBg"></div>
+        <div class="row"><label for="set-cFg">Text</label><input type="color" id="set-cFg" data-set="cFg"></div>
+        <div class="row"><label for="set-cAc">Highlights</label><input type="color" id="set-cAc" data-set="cAc"></div>
+      </div>
+    </div>
+    <div class="grp">
+      <h3>Reading aids</h3>
+      <div class="row"><label for="set-awake">Keep screen on</label><input class="tog" type="checkbox" id="set-awake" data-set="awake"></div>
+      <div class="row"><label for="set-scrollSpeed">Auto-scroll speed</label><output data-out="scrollSpeed" data-unit=""></output></div>
+      <input type="range" id="set-scrollSpeed" data-set="scrollSpeed" min="1" max="12" step="1">
+      <div class="row"><label for="set-ttsRate">Read-aloud speed</label><output data-out="ttsRate" data-unit="×"></output></div>
+      <input type="range" id="set-ttsRate" data-set="ttsRate" min="0.4" max="1.4" step="0.1">
+    </div>
+    <div class="two"><button class="btn warn" id="resetSettings">Reset display settings</button></div>
+  </div>
+</section>
+
+<!-- Verse list -->
+<section class="sheet" id="sh-list" role="dialog" aria-label="Verses" hidden>
+  <div class="sh-head"><h2>Verses</h2><button class="chip" id="listMarks" aria-pressed="false">★ Saved only</button><button class="btn" data-close>Close</button></div>
+  <div class="sh-body"><ul class="vl" id="vlist"></ul></div>
+</section>
+
+<!-- Edit verse -->
+<section class="sheet" id="sh-edit" role="dialog" aria-label="Edit verse" hidden>
+  <div class="sh-head"><h2 id="edTitle">Edit verse</h2><button class="btn" data-close>Cancel</button></div>
+  <div class="sh-body">
+    <label class="lab" for="ed-hi">Hindi (Devanagari), one line per row</label><textarea id="ed-hi" lang="hi"></textarea>
+    <label class="lab" for="ed-tr">Roman transliteration</label><textarea id="ed-tr"></textarea>
+    <label class="lab" for="ed-en">English meaning</label><textarea id="ed-en"></textarea>
+    <label class="lab" for="ed-note">My note (shown under the verse)</label><textarea id="ed-note" placeholder="Write a meaning, a reminder or a dedication"></textarea>
+    <div class="two"><button class="btn warn" id="edReset">Restore original</button><button class="btn pri" id="edSave">Save</button></div>
+  </div>
+</section>
+
+<!-- Japa -->
+<section class="sheet" id="sh-japa" role="dialog" aria-label="Japa counter" hidden>
+  <div class="sh-head"><h2>Japa counter</h2><button class="btn" data-close>Done</button></div>
+  <div class="sh-body">
+    <div class="mala"><div class="ring" id="ring"><button class="tap" id="tap" aria-label="Count one"><b id="jCount">0</b><span id="jMantra"></span><small id="jOf"></small></button></div></div>
+    <div class="stats">
+      <div class="stat"><b id="jRounds">0</b><small>Rounds</small></div>
+      <div class="stat"><b id="jToday">0</b><small>Today</small></div>
+      <div class="stat"><b id="jStreak">0</b><small>Day streak</small></div>
+    </div>
+    <div class="two"><button class="btn" id="jUndo">Undo one</button><button class="btn warn" id="jReset">Reset count</button></div>
+    <div class="grp">
+      <h3>Beads per round</h3>
+      <div class="chips" id="jTargets"><button class="chip" data-t="11">11</button><button class="chip" data-t="21">21</button><button class="chip" data-t="51">51</button><button class="chip" data-t="108">108</button></div>
+      <label class="lab" for="jCustom">Your own number</label><input type="number" id="jCustom" min="1" max="9999" inputmode="numeric" placeholder="e.g. 40">
+      <label class="lab" for="jMantraIn">Mantra shown on the counter</label><input type="text" id="jMantraIn" lang="hi" maxlength="40">
+      <div class="row"><label for="jVib">Vibrate on each count</label><input class="tog" type="checkbox" id="jVib"></div>
+    </div>
+    <div class="grp">
+      <h3>Full Chalisa readings</h3>
+      <div class="row"><label>Read today: <b id="pToday">0</b> &nbsp; Total: <b id="pTotal">0</b></label><button class="btn pri" id="pAdd">+1 Read</button></div>
+      <div class="week" id="weekBars"></div><div class="week-l" id="weekLbl"></div>
+    </div>
+  </div>
+</section>
+
+<!-- More -->
+<section class="sheet" id="sh-more" role="dialog" aria-label="More" hidden>
+  <div class="sh-head"><h2>Backup &amp; more</h2><button class="btn" data-close>Done</button></div>
+  <div class="sh-body">
+    <div class="grp">
+      <h3>Backup</h3>
+      <p style="margin:0 0 8px;font-size:15px;line-height:1.5;color:var(--muted)">Your edits, notes, bookmarks, settings and japa history stay on this device. Copy the backup code to keep it safe, or paste a saved code and restore it.</p>
+      <textarea id="bk" aria-label="Backup code" spellcheck="false"></textarea>
+      <div class="two"><button class="btn" id="bkCopy">Copy backup</button><button class="btn pri" id="bkRestore">Restore from box</button></div>
+    </div>
+    <div class="grp">
+      <h3>Edits</h3>
+      <div class="row"><label>Verses I changed: <b id="nEdits">0</b> · Notes: <b id="nNotes">0</b> · Saved: <b id="nMarks">0</b></label></div>
+      <div class="two"><button class="btn warn" id="clrEdits">Restore all original text</button></div>
+      <div class="two"><button class="btn warn" id="clrAll">Erase everything</button></div>
+    </div>
+    <div class="grp">
+      <h3>About</h3>
+      <p style="margin:0;font-size:15px;line-height:1.55;color:var(--muted)">The Hanuman Chalisa was composed by Goswami Tulsidas in the 16th century and is in the public domain. The English meanings here are short plain summaries. Spellings of old Awadhi words vary between printed editions, so use the edit button on any verse to match your own book.</p>
+    </div>
+  </div>
+</section>
+
+<div id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- text ---------- */
+var D=[
+{id:"d1",k:"d",hi:["श्रीगुरु चरन सरोज रज, निज मनु मुकुरु सुधारि।","बरनउँ रघुबर बिमल जसु, जो दायकु फल चारि॥"],
+ tr:["Shri guru charan saroj raj, nij manu mukuru sudhaari","Baranaun Raghubar bimal jasu, jo daayaku phal chaari"],
+ en:"Cleaning the mirror of my mind with the dust of my Guru's lotus feet, I sing the pure glory of Sri Rama, who grants the four fruits of life."},
+{id:"d2",k:"d",hi:["बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।","बल बुद्धि बिद्या देहु मोहिं, हरहु कलेस बिकार॥"],
+ tr:["Buddhi-heen tanu jaanike, sumirau Pavan-kumaar","Bal buddhi bidyaa dehu mohin, harahu kales bikaar"],
+ en:"Knowing myself to be without wisdom, I remember you, son of the Wind. Grant me strength, intellect and knowledge, and remove my pain and flaws."},
+{n:1,hi:["जय हनुमान ज्ञान गुन सागर।","जय कपीस तिहुँ लोक उजागर॥"],tr:["Jai Hanumaan gyaan gun saagar","Jai Kapees tihun lok ujaagar"],en:"Victory to Hanuman, ocean of wisdom and virtue. Victory to the lord of the monkeys, who lights up the three worlds."},
+{n:2,hi:["राम दूत अतुलित बल धामा।","अंजनि-पुत्र पवनसुत नामा॥"],tr:["Raam doot atulit bal dhaamaa","Anjani-putra Pavansut naamaa"],en:"Messenger of Rama, home of matchless strength, known as Anjani's son and the son of the Wind."},
+{n:3,hi:["महाबीर बिक्रम बजरंगी।","कुमति निवार सुमति के संगी॥"],tr:["Mahaabeer bikram Bajrangee","Kumati nivaar sumati ke sangee"],en:"Great hero of mighty valour, with limbs strong as a thunderbolt. You drive away bad thinking and keep company with good sense."},
+{n:4,hi:["कंचन बरन बिराज सुबेसा।","कानन कुंडल कुंचित केसा॥"],tr:["Kanchan baran biraaj subesaa","Kaanan kundal kunchit kesaa"],en:"Golden in colour and splendidly dressed, with earrings in your ears and curly hair."},
+{n:5,hi:["हाथ बज्र औ ध्वजा बिराजै।","काँधे मूँज जनेऊ साजै॥"],tr:["Haath bajra au dhvajaa biraajai","Kaandhe moonj janeoo saajai"],en:"The mace and the banner shine in your hands, and a sacred thread of munja grass adorns your shoulder."},
+{n:6,hi:["संकर सुवन केसरी नंदन।","तेज प्रताप महा जग बंदन॥"],tr:["Sankar suvan Kesaree nandan","Tej prataap mahaa jag bandan"],en:"Son of Shiva and delight of Kesari, your radiance and glory are honoured across the world."},
+{n:7,hi:["बिद्यावान गुनी अति चातुर।","राम काज करिबे को आतुर॥"],tr:["Bidyaavaan gunee ati chaatur","Raam kaaj karibe ko aatur"],en:"Learned, virtuous and very clever, you are always eager to do Rama's work."},
+{n:8,hi:["प्रभु चरित्र सुनिबे को रसिया।","राम लखन सीता मन बसिया॥"],tr:["Prabhu charitra sunibe ko rasiyaa","Raam Lakhan Seetaa man basiyaa"],en:"You delight in hearing the Lord's story. Rama, Lakshman and Sita live in your heart."},
+{n:9,hi:["सूक्ष्म रूप धरि सियहिं दिखावा।","बिकट रूप धरि लंक जरावा॥"],tr:["Sookshma roop dhari Siyahin dikhaavaa","Bikat roop dhari Lank jaraavaa"],en:"In a tiny form you appeared before Sita. In a fearsome form you burned Lanka."},
+{n:10,hi:["भीम रूप धरि असुर सँहारे।","रामचंद्र के काज सँवारे॥"],tr:["Bheem roop dhari asur sanhaare","Raamchandra ke kaaj sanvaare"],en:"Taking a mighty form you destroyed the demons and carried out Sri Ramachandra's tasks."},
+{n:11,hi:["लाय सजीवन लखन जियाये।","श्रीरघुबीर हरषि उर लाये॥"],tr:["Laay sanjeevan Lakhan jiyaaye","Shri Raghubeer harashi ur laaye"],en:"You brought the life-giving herb and revived Lakshman. Sri Raghuvir joyfully embraced you."},
+{n:12,hi:["रघुपति कीन्ही बहुत बड़ाई।","तुम मम प्रिय भरतहि सम भाई॥"],tr:["Raghupati keenhee bahut badaaee","Tum mama priya Bharatahi sam bhaaee"],en:"Raghupati praised you greatly: \"You are as dear to me as my brother Bharata.\""},
+{n:13,hi:["सहस बदन तुम्हरो जस गावैं।","अस कहि श्रीपति कंठ लगावैं॥"],tr:["Sahas badan tumharo jas gaavain","As kahi Shreepati kanth lagaavain"],en:"\"Thousands of mouths sing your glory,\" said the Lord of Lakshmi, and drew you to His chest."},
+{n:14,hi:["सनकादिक ब्रह्मादि मुनीसा।","नारद सारद सहित अहीसा॥"],tr:["Sanakaadik Brahmaadi muneesaa","Naarad Saarad sahit Aheesaa"],en:"Sanaka and the sages, Brahma and the great seers, Narada, Sarasvati and Shesha, king of serpents,"},
+{n:15,hi:["जम कुबेर दिगपाल जहाँ ते।","कबि कोबिद कहि सके कहाँ ते॥"],tr:["Jam Kuber digpaal jahaan te","Kabi kobid kahi sake kahaan te"],en:"Yama, Kubera and the guardians of the directions. Even poets and scholars cannot fully tell your glory."},
+{n:16,hi:["तुम उपकार सुग्रीवहिं कीन्हा।","राम मिलाय राज पद दीन्हा॥"],tr:["Tum upkaar Sugreevahin keenhaa","Raam milaay raaj pad deenhaa"],en:"You did Sugriva a great kindness: you brought him to Rama and he received the kingdom."},
+{n:17,hi:["तुम्हरो मंत्र बिभीषन माना।","लंकेस्वर भए सब जग जाना॥"],tr:["Tumharo mantra Bibheeshan maanaa","Lankeshwar bhae sab jag jaanaa"],en:"Vibhishana followed your advice and became lord of Lanka, as the whole world knows."},
+{n:18,hi:["जुग सहस्र जोजन पर भानू।","लील्यो ताहि मधुर फल जानू॥"],tr:["Jug sahasra jojan par bhaanoo","Leelyo taahi madhur phal jaanoo"],en:"The sun, thousands of leagues away, you swallowed thinking it a sweet fruit."},
+{n:19,hi:["प्रभु मुद्रिका मेलि मुख माहीं।","जलधि लाँघि गये अचरज नाहीं॥"],tr:["Prabhu mudrikaa meli mukh maahin","Jaladhi laanghi gaye achraj naahin"],en:"Holding the Lord's ring in your mouth you leapt across the ocean. It is no wonder."},
+{n:20,hi:["दुर्गम काज जगत के जेते।","सुगम अनुग्रह तुम्हरे तेते॥"],tr:["Durgam kaaj jagat ke jete","Sugam anugraha tumhre tete"],en:"Every hard task in the world becomes easy through your grace."},
+{n:21,hi:["राम दुआरे तुम रखवारे।","होत न आज्ञा बिनु पैसारे॥"],tr:["Raam duaare tum rakhvaare","Hot na aagyaa binu paisaare"],en:"You guard the door of Rama. No one enters without your permission."},
+{n:22,hi:["सब सुख लहै तुम्हारी सरना।","तुम रच्छक काहू को डर ना॥"],tr:["Sab sukh lahai tumhaaree sarnaa","Tum rachchhak kaahoo ko dar naa"],en:"All happiness comes to those who take refuge in you. With you as protector there is nothing to fear."},
+{n:23,hi:["आपन तेज सम्हारो आपै।","तीनों लोक हाँक तें काँपै॥"],tr:["Aapan tej samhaaro aapai","Teenon lok haank te kaanpai"],en:"Only you can hold your own radiance. The three worlds tremble at your roar."},
+{n:24,hi:["भूत पिसाच निकट नहिं आवै।","महाबीर जब नाम सुनावै॥"],tr:["Bhoot pisaach nikat nahin aavai","Mahaabeer jab naam sunaavai"],en:"Ghosts and evil spirits do not come near when the name of Mahavir is spoken."},
+{n:25,hi:["नासै रोग हरै सब पीरा।","जपत निरंतर हनुमत बीरा॥"],tr:["Naasai rog harai sab peeraa","Japat nirantar Hanumat beeraa"],en:"Illness is destroyed and all pain removed for those who keep chanting brave Hanuman's name."},
+{n:26,hi:["संकट तें हनुमान छुड़ावै।","मन क्रम बचन ध्यान जो लावै॥"],tr:["Sankat te Hanumaan chhudaavai","Man kram bachan dhyaan jo laavai"],en:"Hanuman frees from trouble the one who meditates on him in thought, deed and word."},
+{n:27,hi:["सब पर राम तपस्वी राजा।","तिन के काज सकल तुम साजा॥"],tr:["Sab par Raam tapasvee raajaa","Tin ke kaaj sakal tum saajaa"],en:"Rama, the ascetic king, is above all, and you carry out all his work."},
+{n:28,hi:["और मनोरथ जो कोई लावै।","सोइ अमित जीवन फल पावै॥"],tr:["Aur manorath jo koee laavai","Soee amit jeevan phal paavai"],en:"Whoever comes to you with any other wish receives the unlimited fruit of life."},
+{n:29,hi:["चारों जुग परताप तुम्हारा।","है परसिद्ध जगत उजियारा॥"],tr:["Chaaron jug partaap tumhaaraa","Hai parasiddh jagat ujiyaaraa"],en:"Your glory spreads through all four ages. Your fame is well known and lights up the world."},
+{n:30,hi:["साधु-संत के तुम रखवारे।","असुर निकंदन राम दुलारे॥"],tr:["Saadhu-sant ke tum rakhvaare","Asur nikandan Raam dulaare"],en:"You protect saints and sages, destroy demons, and are the beloved of Rama."},
+{n:31,hi:["अष्ट सिद्धि नौ निधि के दाता।","अस बर दीन जानकी माता॥"],tr:["Asht siddhi nau nidhi ke daataa","As bar deen Jaanakee maataa"],en:"Giver of the eight powers and nine treasures: Mother Janaki granted you this boon."},
+{n:32,hi:["राम रसायन तुम्हरे पासा।","सदा रहो रघुपति के दासा॥"],tr:["Raam rasaayan tumhre paasaa","Sadaa raho Raghupati ke daasaa"],en:"You hold the elixir of Rama's name and remain forever Raghupati's servant."},
+{n:33,hi:["तुम्हरे भजन राम को पावै।","जनम-जनम के दुख बिसरावै॥"],tr:["Tumhre bhajan Raam ko paavai","Janam-janam ke dukh bisraavai"],en:"Through singing your praise one reaches Rama and forgets the sorrows of many births."},
+{n:34,hi:["अंत काल रघुबर पुर जाई।","जहाँ जन्म हरि-भक्त कहाई॥"],tr:["Ant kaal Raghubar pur jaaee","Jahaan janma Hari-bhakt kahaaee"],en:"At life's end one goes to Raghubar's city and is born there known as a devotee of Hari."},
+{n:35,hi:["और देवता चित्त न धरई।","हनुमत सेइ सर्ब सुख करई॥"],tr:["Aur devataa chitt na dharaee","Hanumat sei sarb sukh karaee"],en:"There is no need to hold any other deity in mind: serving Hanuman gives every happiness."},
+{n:36,hi:["संकट कटै मिटै सब पीरा।","जो सुमिरै हनुमत बलबीरा॥"],tr:["Sankat katai mitai sab peeraa","Jo sumirai Hanumat balbeeraa"],en:"Troubles are cut away and all pain ends for the one who remembers mighty Hanuman."},
+{n:37,hi:["जै जै जै हनुमान गोसाईं।","कृपा करहु गुरुदेव की नाईं॥"],tr:["Jai jai jai Hanumaan gosaaee","Kripaa karahu gurudev kee naaee"],en:"Hail, hail, hail Lord Hanuman! Show me grace as a Guru would."},
+{n:38,hi:["जो सत बार पाठ कर कोई।","छूटहि बंदि महा सुख होई॥"],tr:["Jo sat baar paath kar koee","Chhootahi bandi mahaa sukh hoee"],en:"Whoever recites this a hundred times is freed from bondage and finds great joy."},
+{n:39,hi:["जो यह पढ़ै हनुमान चलीसा।","होय सिद्धि साखी गौरीसा॥"],tr:["Jo yah padhai Hanumaan chaleesaa","Hoy siddhi saakhee Gaureesaa"],en:"Whoever reads this Hanuman Chalisa gains success. Shiva, the lord of Gauri, is witness."},
+{n:40,hi:["तुलसीदास सदा हरि चेरा।","कीजै नाथ हृदय महँ डेरा॥"],tr:["Tulsidaas sadaa Hari cheraa","Keejai naath hriday mah deraa"],en:"Tulsidas, forever a servant of Hari, prays: \"O Lord, make your home in my heart.\""},
+{id:"d3",k:"d",hi:["पवनतनय संकट हरन, मंगल मूरति रूप।","राम लखन सीता सहित, हृदय बसहु सुर भूप॥"],
+ tr:["Pavan-tanay sankat haran, mangal moorati roop","Raam Lakhan Seetaa sahit, hriday basahu sur bhoop"],
+ en:"Son of the Wind, remover of hardship, embodiment of auspiciousness: dwell in my heart with Rama, Lakshman and Sita, O king of gods."}
+];
+D.forEach(function(v,i){ if(v.n){v.id="c"+v.n;v.k="c";} v.i=i; });
+var SEC={d1:"दोहा · Opening",c1:"चौपाई · Verses",d3:"दोहा · Closing"};
+
+/* ---------- storage ---------- */
+function ld(k,d){try{var s=localStorage.getItem(k);return s?JSON.parse(s):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var DEF={size:36,trScale:55,enSize:18,lh:1.7,showTr:true,showEn:false,showNum:true,showNotes:true,bold:false,
+  mode:"scroll",align:"center",font:"serif",theme:"saffron",cBg:"#fff8e7",cFg:"#2b1208",cAc:"#d9480f",
+  awake:false,scrollSpeed:4,ttsRate:0.8,idx:0,last:"d1",marksOnly:false};
+var S=Object.assign({},DEF,ld("hc.s",{}));
+var E=ld("hc.e",{}), N=ld("hc.n",{}), M=ld("hc.m",{});
+var J=Object.assign({count:0,target:108,rounds:0,vibrate:true,mantra:"जय हनुमान",days:{},paath:{}},ld("hc.j",{}));
+function saveS(){sv("hc.s",S)} function saveJ(){sv("hc.j",J)}
+
+/* ---------- helpers ---------- */
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function h(t,a,kids){var e=document.createElement(t);for(var k in (a||{})){if(k==="class")e.className=a[k];else if(k==="text")e.textContent=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(c){e.appendChild(c)});return e}
+var IC={star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+ spk:'<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+ shr:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.6l6.8-4M8.6 13.4l6.8 4" fill="none" stroke="currentColor" stroke-width="2"/>',
+ pen:'<path d="M4 20h4L19 9l-4-4L4 16v4z"/>'};
+function ib(name,label,cls,fn){var b=h("button",{type:"button","aria-label":label,class:cls||""});b.innerHTML='<svg viewBox="0 0 24 24">'+IC[name]+'</svg>';b.addEventListener("click",fn);return b}
+var A=window.AndroidBridge;
+function vib(ms){try{if(A&&A.vibrate)A.vibrate(ms);else if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
+var tt;function toast(m){var t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(function(){t.hidden=true},2200)}
+function copy(txt,ok){
+  function fb(){var ta=h("textarea");ta.value=txt;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();var r=false;try{r=document.execCommand("copy")}catch(e){}ta.remove();toast(r?ok:"Select the text and copy it")}
+  try{navigator.clipboard.writeText(txt).then(function(){toast(ok)},fb)}catch(e){fb()}
+}
+function V(v){var e=E[v.id];return{hi:e&&e.hi||v.hi,tr:e&&e.tr||v.tr,en:e&&e.en!==undefined?e.en:v.en,ed:!!e}}
+function label(v){return v.k==="d"?"दोहा":"चौपाई "+v.n}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function lines(s){return String(s).split(/\n/).map(function(x){return x.trim()}).filter(Boolean)}
+
+/* ---------- apply settings ---------- */
+function apply(){
+  var r=document.documentElement,st=r.style;
+  r.setAttribute("data-app-theme",S.theme);
+  ["--bg","--fg","--accent","--on-accent"].forEach(function(p){st.removeProperty(p)});
+  if(S.theme==="custom"){st.setProperty("--bg",S.cBg);st.setProperty("--fg",S.cFg);st.setProperty("--accent",S.cAc);st.setProperty("--on-accent",lum(S.cAc)>0.45?"#111":"#fff");}
+  st.setProperty("--hi",S.size+"px");
+  st.setProperty("--tr",Math.max(12,Math.round(S.size*S.trScale/100))+"px");
+  st.setProperty("--en",S.enSize+"px");
+  st.setProperty("--lh",S.lh);
+  st.setProperty("--align",S.align);
+  st.setProperty("--hi-weight",S.bold?"800":"500");
+  var f={serif:'"Noto Serif Devanagari","Tiro Devanagari Hindi","Kohinoor Devanagari","Nirmala UI",serif',
+         sans:'"Noto Sans Devanagari","Mukta","Hind","Nirmala UI",system-ui,sans-serif',
+         system:'system-ui,-apple-system,"Noto Sans Devanagari",sans-serif'}[S.font];
+  st.setProperty("--ff-hi",f);
+  $("#btnMarks").classList.toggle("on",S.marksOnly);$("#btnMarks").setAttribute("aria-pressed",String(S.marksOnly));
+  $("#listMarks").classList.toggle("on",S.marksOnly);$("#listMarks").setAttribute("aria-pressed",String(S.marksOnly));
+}
+function lum(hex){var m=/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex||"");if(!m)return 0.5;return(0.299*parseInt(m[1],16)+0.587*parseInt(m[2],16)+0.114*parseInt(m[3],16))/255}
+
+/* ---------- render ---------- */
+var main=$("#main");
+function visible(){return D.filter(function(v){return !S.marksOnly||M[v.id]})}
+function card(v){
+  var d=V(v),a=h("article",{class:"v",id:"v-"+v.id,"data-id":v.id});
+  var hd=h("div",{class:"vhead"});
+  if(S.showNum)hd.appendChild(h("span",{class:"badge",text:v.k==="d"?"॥":String(v.n)}));
+  var tg=h("span",{class:"tag",text:label(v)});if(d.ed)tg.appendChild(h("span",{class:"edited",text:"edited"}));hd.appendChild(tg);
+  var ac=h("div",{class:"acts"});
+  ac.appendChild(ib("star",M[v.id]?"Remove bookmark":"Bookmark verse",M[v.id]?"on":"",function(){if(M[v.id])delete M[v.id];else M[v.id]=1;sv("hc.m",M);render(true);}));
+  ac.appendChild(ib("spk","Read aloud","",function(){speak(v)}));
+  ac.appendChild(ib("shr","Share verse","",function(){share(v)}));
+  ac.appendChild(ib("pen","Edit verse","",function(){openEdit(v)}));
+  hd.appendChild(ac);a.appendChild(hd);
+  a.appendChild(h("div",{class:"hi",lang:"hi"},d.hi.map(function(l){return h("p",{text:l})})));
+  if(S.showTr&&d.tr&&d.tr.length)a.appendChild(h("div",{class:"tr"},d.tr.map(function(l){return h("p",{text:l})})));
+  if(S.showEn&&d.en)a.appendChild(h("div",{class:"en",text:d.en}));
+  if(S.showNotes&&N[v.id])a.appendChild(h("div",{class:"note"},[h("small",{text:"My note"}),h("span",{text:N[v.id]})]));
+  return a;
+}
+function render(keep){
+  var y=window.scrollY;main.innerHTML="";var list=visible();
+  if(!list.length){main.appendChild(h("div",{class:"empty",text:"No saved verses yet. Tap the star on any verse to save it."}));$("#qListS").textContent="0 saved";progress();return}
+  if(S.mode==="card"){
+    if(S.idx>=list.length)S.idx=list.length-1;if(S.idx<0)S.idx=0;
+    var v=list[S.idx];main.appendChild(card(v));
+    var pg=h("div",{class:"pager"});
+    var p=h("button",{class:"btn",type:"button",text:"◀ Previous"});p.disabled=S.idx===0;p.style.opacity=p.disabled?.4:1;
+    var n=h("button",{class:"btn pri",type:"button",text:"Next ▶"});n.disabled=S.idx===list.length-1;n.style.opacity=n.disabled?.4:1;
+    p.onclick=function(){go(-1)};n.onclick=function(){go(1)};pg.appendChild(p);pg.appendChild(n);main.appendChild(pg);
+    $("#qListS").textContent=(S.idx+1)+" / "+list.length;
+    if(!keep)window.scrollTo(0,0);else window.scrollTo(0,y);
+  }else{
+    list.forEach(function(v){if(!S.marksOnly&&SEC[v.id])main.appendChild(h("div",{class:"sec",text:SEC[v.id]}));main.appendChild(card(v));});
+    if(!S.marksOnly){var e=h("div",{class:"end"},[]);var b=h("button",{class:"btn pri",type:"button",text:"I finished reading · +1"});b.onclick=addRead;e.appendChild(b);main.appendChild(e);}
+    $("#qListS").textContent=list.length+" verses";
+    if(keep)window.scrollTo(0,y);
+  }
+  progress();
+}
+function go(d){S.idx+=d;saveS();render();}
+function progress(){
+  var list=visible(),f=0;
+  if(S.mode==="card")f=list.length>1?S.idx/(list.length-1):0;
+  else{var m=document.documentElement.scrollHeight-window.innerHeight;f=m>0?Math.min(1,window.scrollY/m):0}
+  $("#progBar").style.width=(f*100)+"%";
+}
+var raf=0;window.addEventListener("scroll",function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;progress();if(S.mode==="scroll"){var els=$$(".v"),cur=null;for(var i=0;i<els.length;i++){if(els[i].getBoundingClientRect().bottom>90){cur=els[i];break}}if(cur&&S.last!==cur.dataset.id){S.last=cur.dataset.id;saveS();}}})},{passive:true});
+function jump(id){
+  var list=visible(),i=list.findIndex(function(v){return v.id===id});if(i<0)return;
+  if(S.mode==="card"){S.idx=i;saveS();render();}
+  else{var el=$("#v-"+id);if(el){var y=el.getBoundingClientRect().top+window.scrollY-80;window.scrollTo(0,y)}}
+}
+var tx=0,ty=0;
+document.addEventListener("touchstart",function(e){if(autoOn)stopAuto();tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.addEventListener("touchend",function(e){if(S.mode!=="card"||openId)return;var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6){var list=visible();if(dx<0&&S.idx<list.length-1)go(1);else if(dx>0&&S.idx>0)go(-1)}},{passive:true});
+
+/* ---------- sheets ---------- */
+var openId=null,scrim=$("#scrim");
+function openSheet(id){if(openId)$("#sh-"+openId).hidden=true;openId=id;$("#sh-"+id).hidden=false;scrim.hidden=false;}
+function closeSheet(){if(!openId)return;$("#sh-"+openId).hidden=true;openId=null;scrim.hidden=true;}
+scrim.addEventListener("click",closeSheet);
+$$("[data-close]").forEach(function(b){b.addEventListener("click",closeSheet)});
+window.onAndroidBack=function(){if(openId){closeSheet();return true}if(autoOn){stopAuto();return true}return false};
+
+/* ---------- settings wiring ---------- */
+function syncSettings(){
+  $$("[data-set]").forEach(function(el){var k=el.dataset.set;if(el.type==="checkbox")el.checked=!!S[k];else el.value=S[k]});
+  $$("[data-out]").forEach(function(o){var k=o.dataset.out;o.textContent=S[k]+o.dataset.unit});
+  $$("[data-seg]").forEach(function(g){$$("[data-val]",g).forEach(function(b){b.classList.toggle("on",b.dataset.val===String(S[g.dataset.seg]))})});
+  $$("#presets .chip").forEach(function(b){b.classList.toggle("on",Number(b.dataset.preset)===S.size)});
+  $("#customBox").hidden=S.theme!=="custom";
+  $("#sample").style.fontSize=Math.min(S.size,90)+"px";
+}
+$$("[data-set]").forEach(function(el){el.addEventListener("input",function(){
+  var k=el.dataset.set;S[k]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.value;
+  saveS();apply();syncSettings();if(k==="awake")wake();if(["showTr","showEn","showNum","showNotes"].indexOf(k)>=0)render(true);else progress();
+})});
+$$("[data-seg]").forEach(function(g){g.addEventListener("click",function(e){var b=e.target.closest("[data-val]");if(!b)return;var k=g.dataset.seg;S[k]=b.dataset.val;saveS();apply();syncSettings();if(k==="mode"||k==="align")render(k==="align");})});
+$$("#presets .chip").forEach(function(b){b.addEventListener("click",function(){setSize(Number(b.dataset.preset))})});
+function setSize(n){S.size=Math.max(16,Math.min(150,Math.round(n)));saveS();apply();syncSettings();progress();toast("Text size "+S.size)}
+function step(dir){var s=S.size,d=s<40?2:s<80?4:6;setSize(s+dir*d)}
+$("#qMinus").onclick=function(){step(-1)};$("#qPlus").onclick=function(){step(1)};
+$("#sMinus").onclick=function(){step(-1)};$("#sPlus").onclick=function(){step(1)};
+$("#btnSettings").onclick=function(){syncSettings();openSheet("settings")};
+$("#resetSettings").onclick=function(){var keep={idx:S.idx,last:S.last};S=Object.assign({},DEF,keep);saveS();apply();syncSettings();render(true);toast("Display settings reset")};
+function toggleMarks(){S.marksOnly=!S.marksOnly;S.idx=0;saveS();apply();render();toast(S.marksOnly?"Showing saved verses":"Showing all verses")}
+$("#btnMarks").onclick=toggleMarks;$("#listMarks").onclick=function(){S.marksOnly=!S.marksOnly;S.idx=0;saveS();apply();render();fillList()};
+
+/* ---------- verse list ---------- */
+function fillList(){
+  var ul=$("#vlist");ul.innerHTML="";var list=visible();
+  if(!list.length)ul.appendChild(h("li",{class:"empty",text:"No saved verses yet."}));
+  list.forEach(function(v){var d=V(v);
+    var li=h("li");var g=h("button",{class:"go",type:"button"},[h("span",{class:"n",text:v.k==="d"?"दोहा":String(v.n)}),h("span",{class:"t",lang:"hi",text:d.hi[0]})]);
+    g.onclick=function(){closeSheet();jump(v.id)};li.appendChild(g);
+    if(M[v.id])li.appendChild(h("span",{class:"st",text:"★"}));ul.appendChild(li);});
+}
+$("#qList").onclick=function(){fillList();openSheet("list")};
+
+/* ---------- edit ---------- */
+var editing=null;
+function openEdit(v){
+  editing=v;var d=V(v);$("#edTitle").textContent="Edit · "+label(v);
+  $("#ed-hi").value=d.hi.join("\n");$("#ed-tr").value=(d.tr||[]).join("\n");$("#ed-en").value=d.en||"";$("#ed-note").value=N[v.id]||"";
+  openSheet("edit");
+}
+$("#edSave").onclick=function(){
+  var v=editing,hi=lines($("#ed-hi").value),tr=lines($("#ed-tr").value),en=$("#ed-en").value.trim(),note=$("#ed-note").value.trim();
+  if(!hi.length){toast("The Hindi text cannot be empty");return}
+  var same=JSON.stringify(hi)===JSON.stringify(v.hi)&&JSON.stringify(tr)===JSON.stringify(v.tr)&&en===v.en;
+  if(same)delete E[v.id];else E[v.id]={hi:hi,tr:tr,en:en};
+  if(note)N[v.id]=note;else delete N[v.id];
+  sv("hc.e",E);sv("hc.n",N);closeSheet();render(true);toast("Saved");
+};
+$("#edReset").onclick=function(){var v=editing;delete E[v.id];sv("hc.e",E);var d=V(v);$("#ed-hi").value=d.hi.join("\n");$("#ed-tr").value=d.tr.join("\n");$("#ed-en").value=d.en;toast("Original text restored. Tap Save to keep it.")};
+
+/* ---------- share / speak ---------- */
+function vtext(v){var d=V(v);return label(v)+"\n"+d.hi.join("\n")+(d.tr&&d.tr.length?"\n\n"+d.tr.join("\n"):"")+(d.en?"\n\n"+d.en:"")+"\n\n— श्री हनुमान चालीसा"}
+function share(v){var t=vtext(v);if(A&&A.share){A.share(t)}else if(navigator.share){navigator.share({text:t}).catch(function(){copy(t,"Verse copied")})}else copy(t,"Verse copied")}
+var speaking=null;
+function speak(v){
+  var t=V(v).hi.join(" ");
+  if(A&&A.speak){if(speaking===v.id){A.stopSpeak();speaking=null;return}speaking=v.id;A.speak(t,S.ttsRate);return}
+  if(!("speechSynthesis" in window)){toast("Read-aloud is not available on this device");return}
+  var ss=window.speechSynthesis;if(speaking===v.id){ss.cancel();speaking=null;return}
+  ss.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="hi-IN";u.rate=S.ttsRate;u.onend=function(){speaking=null};speaking=v.id;ss.speak(u);
+}
+
+/* ---------- auto scroll & wake ---------- */
+var autoOn=false,acc=0,lt=0,arf=0;
+function loop(t){if(!autoOn)return;var dt=lt?t-lt:16;lt=t;acc+=S.scrollSpeed*14*dt/1000;var n=Math.floor(acc);if(n>=1){window.scrollBy(0,n);acc-=n}
+  if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-2){stopAuto();toast("End of the Chalisa");return}arf=requestAnimationFrame(loop)}
+function startAuto(){if(S.mode==="card"){S.mode="scroll";saveS();syncSettings();render()}autoOn=true;acc=0;lt=0;$("#qScroll").classList.add("on");$("#qScroll").setAttribute("aria-pressed","true");$("#qScrollS").textContent="tap to stop";arf=requestAnimationFrame(loop)}
+function stopAuto(){autoOn=false;cancelAnimationFrame(arf);$("#qScroll").classList.remove("on");$("#qScroll").setAttribute("aria-pressed","false");$("#qScrollS").textContent="auto"}
+$("#qScroll").onclick=function(){autoOn?stopAuto():startAuto()};
+var wl=null;
+function wake(){
+  if(A&&A.keepAwake){A.keepAwake(!!S.awake);return}
+  try{if(S.awake&&navigator.wakeLock){navigator.wakeLock.request("screen").then(function(l){wl=l},function(){})}else if(wl){wl.release();wl=null}}catch(e){}
+}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&S.awake)wake()});
+
+/* ---------- japa ---------- */
+function streak(){var n=0,d=new Date();if(!(J.paath[today()]>0))d.setDate(d.getDate()-1);
+  for(;;){var k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(J.paath[k]>0){n++;d.setDate(d.getDate()-1)}else break}return n}
+function paintJ(){
+  $("#jCount").textContent=J.count;$("#jMantra").textContent=J.mantra;$("#jOf").textContent="of "+J.target;
+  $("#ring").style.setProperty("--p",Math.min(100,J.count/J.target*100));
+  $("#jRounds").textContent=J.rounds;$("#jToday").textContent=J.days[today()]||0;$("#jStreak").textContent=streak();
+  $$("#jTargets .chip").forEach(function(b){b.classList.toggle("on",Number(b.dataset.t)===J.target)});
+  $("#jCustom").value=[11,21,51,108].indexOf(J.target)<0?J.target:"";$("#jMantraIn").value=J.mantra;$("#jVib").checked=J.vibrate;
+  var pt=J.paath[today()]||0,tot=0;for(var k in J.paath)tot+=J.paath[k];$("#pToday").textContent=pt;$("#pTotal").textContent=tot;
+  var bars=$("#weekBars"),lb=$("#weekLbl");bars.innerHTML="";lb.innerHTML="";var days=[],mx=1;
+  for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");days.push({k:key,w:["S","M","T","W","T","F","S"][d.getDay()],v:J.paath[key]||0});mx=Math.max(mx,J.paath[key]||0)}
+  days.forEach(function(x){var b=h("div",{title:x.v+" readings"});b.style.height=(x.v?Math.max(8,x.v/mx*100):4)+"%";if(!x.v)b.style.opacity=.25;bars.appendChild(b);lb.appendChild(h("span",{text:x.w}))});
+  $("#qJapaS").textContent=J.count+" / "+J.target;
+}
+$("#tap").addEventListener("click",function(){
+  J.count++;J.days[today()]=(J.days[today()]||0)+1;
+  if(J.count>=J.target){J.count=0;J.rounds++;vib(300);toast("Round "+J.rounds+" complete")}else vib(J.vibrate?18:0);
+  saveJ();paintJ();
+});
+$("#jUndo").onclick=function(){if(J.count>0){J.count--;if(J.days[today()]>0)J.days[today()]--;saveJ();paintJ()}};
+$("#jReset").onclick=function(){J.count=0;J.rounds=0;saveJ();paintJ();toast("Counter reset")};
+$$("#jTargets .chip").forEach(function(b){b.onclick=function(){J.target=Number(b.dataset.t);J.count=Math.min(J.count,J.target-1);saveJ();paintJ()}});
+$("#jCustom").addEventListener("change",function(){var n=parseInt(this.value,10);if(n>=1&&n<=9999){J.target=n;J.count=Math.min(J.count,n-1);saveJ();paintJ()}});
+$("#jMantraIn").addEventListener("input",function(){J.mantra=this.value;saveJ();$("#jMantra").textContent=J.mantra});
+$("#jVib").addEventListener("change",function(){J.vibrate=this.checked;saveJ()});
+function addRead(){J.paath[today()]=(J.paath[today()]||0)+1;saveJ();paintJ();toast("Jai Shri Ram · reading "+J.paath[today()]+" today")}
+$("#pAdd").onclick=addRead;
+$("#qJapa").onclick=function(){paintJ();openSheet("japa")};
+
+/* ---------- more / backup ---------- */
+function counts(){$("#nEdits").textContent=Object.keys(E).length;$("#nNotes").textContent=Object.keys(N).length;$("#nMarks").textContent=Object.keys(M).length}
+$("#btnMore").onclick=function(){counts();$("#bk").value="";openSheet("more")};
+$("#bkCopy").onclick=function(){var s=JSON.stringify({v:1,s:S,e:E,n:N,m:M,j:J});$("#bk").value=s;copy(s,"Backup copied")};
+$("#bkRestore").onclick=function(){
+  try{var o=JSON.parse($("#bk").value);if(!o||o.v!==1)throw 0;
+    S=Object.assign({},DEF,o.s||{});E=o.e||{};N=o.n||{};M=o.m||{};J=Object.assign(J,o.j||{});
+    saveS();sv("hc.e",E);sv("hc.n",N);sv("hc.m",M);saveJ();apply();syncSettings();render();paintJ();counts();toast("Backup restored")}
+  catch(e){toast("That is not a valid backup code")}
+};
+var armed=0;
+function twice(btn,msg,fn){var t=btn.textContent;btn.onclick=function(){if(!btn.dataset.arm){btn.dataset.arm=1;btn.textContent="Tap again to confirm";setTimeout(function(){delete btn.dataset.arm;btn.textContent=t},3000)}else{delete btn.dataset.arm;btn.textContent=t;fn();toast(msg)}}}
+twice($("#clrEdits"),"Original text restored",function(){E={};sv("hc.e",E);render(true);counts()});
+twice($("#clrAll"),"Everything erased",function(){["hc.s","hc.e","hc.n","hc.m","hc.j"].forEach(function(k){try{localStorage.removeItem(k)}catch(e){}});S=Object.assign({},DEF);E={};N={};M={};J={count:0,target:108,rounds:0,vibrate:true,mantra:"जय हनुमान",days:{},paath:{}};apply();syncSettings();render();paintJ();counts()});
+
+/* ---------- start ---------- */
+apply();syncSettings();render();paintJ();if(S.awake)wake();
+if(S.mode==="scroll"&&S.last&&S.last!=="d1"){setTimeout(function(){jump(S.last)},60)}
+})();
+</script>
